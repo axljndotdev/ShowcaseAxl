@@ -1,22 +1,38 @@
 import { useParams, Link } from "wouter";
-import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ExternalLink, Star, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { getProductById } from "@/lib/data";
 import type { Product } from "@shared/schema";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const { data: product, isLoading, error } = useQuery<Product>({
-    queryKey: ["/api/products", id],
-    enabled: !!id,
-  });
+  useEffect(() => {
+    if (id) {
+      getProductById(id)
+        .then(result => {
+          if (result) {
+            setProduct(result);
+          } else {
+            setError('Product not found');
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load product:', err);
+          setError('Failed to load product');
+        })
+        .finally(() => setIsLoading(false));
+    }
+  }, [id]);
 
   if (isLoading) {
     return (

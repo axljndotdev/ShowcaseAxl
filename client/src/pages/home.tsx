@@ -1,36 +1,48 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import Header from "@/components/header";
 import CategoryFilter from "@/components/category-filter";
 import ProductGrid from "@/components/product-grid";
 import FloatingActionButton from "@/components/floating-action-button";
 import Footer from "@/components/footer";
+import { getCategories, getProductsByCategory, searchProducts } from "@/lib/data";
 import type { Product, Category } from "@shared/schema";
 
 export default function Home() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("cat1");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+  const [productsLoading, setProductsLoading] = useState(true);
 
-  const { data: categories = [], isLoading: categoriesLoading } = useQuery<Category[]>({
-    queryKey: ["/api/categories"],
-  });
+  // Load categories
+  useEffect(() => {
+    getCategories()
+      .then(setCategories)
+      .catch(console.error)
+      .finally(() => setCategoriesLoading(false));
+  }, []);
 
-  const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
-    queryKey: searchQuery 
-      ? ["/api/products/search", { q: searchQuery }]
-      : ["/api/products/category", selectedCategoryId],
-    queryFn: async ({ queryKey }) => {
-      if (searchQuery) {
-        const response = await fetch(`/api/products/search?q=${encodeURIComponent(searchQuery)}`);
-        if (!response.ok) throw new Error('Failed to search products');
-        return response.json();
-      } else {
-        const response = await fetch(`/api/products/category/${selectedCategoryId}`);
-        if (!response.ok) throw new Error('Failed to fetch products');
-        return response.json();
+  // Load products when category or search changes
+  useEffect(() => {
+    setProductsLoading(true);
+    const loadProducts = async () => {
+      try {
+        if (searchQuery) {
+          const results = await searchProducts(searchQuery);
+          setProducts(results);
+        } else {
+          const results = await getProductsByCategory(selectedCategoryId);
+          setProducts(results);
+        }
+      } catch (error) {
+        console.error('Failed to load products:', error);
+      } finally {
+        setProductsLoading(false);
       }
-    },
-  });
+    };
+    loadProducts();
+  }, [selectedCategoryId, searchQuery]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
