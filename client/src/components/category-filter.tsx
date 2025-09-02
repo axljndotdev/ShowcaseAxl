@@ -36,13 +36,9 @@ export default function CategoryFilter({
           {categories.map((category) => (
             <Button
               key={category.id}
-              variant={selectedCategoryId === category.id ? "default" : "secondary"}
+              variant="secondary"
               onClick={() => onCategorySelect(category.id)}
-              className={`flex-shrink-0 px-6 py-2 rounded-full font-medium transition-all duration-200 ${
-                selectedCategoryId === category.id
-                  ? "gradient-primary text-white hover:opacity-90"
-                  : "bg-card text-foreground hover:bg-muted"
-              }`}
+              className="flex-shrink-0 px-6 py-2 rounded-full font-medium transition-all duration-200 bg-card text-foreground hover:bg-muted"
               data-testid={`button-category-${category.slug}`}
             >
               {category.name}

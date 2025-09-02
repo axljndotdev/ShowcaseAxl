@@ -28,20 +28,24 @@ export default function Header({ searchQuery, onSearchChange }: HeaderProps) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3\">
             <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">S</span>
+              <span className="text-white font-bold text-lg">AXL</span>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold" data-testid="text-logo">Showcase</h1>
-              <p className="text-xs text-muted-foreground">Affiliate Store</p>
+              <h1 className="text-xl font-bold" data-testid="text-logo">
+                AXL's Showcase
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                TikTok Affiliate Store
+              </p>
             </div>
           </div>
-          
+
           {/* Search Bar */}
           <div className="flex-1 max-w-lg mx-4">
             <div className="relative">
-              <Input 
+              <Input
                 type="text"
                 placeholder="Search products..."
                 value={searchQuery}
@@ -52,7 +56,7 @@ export default function Header({ searchQuery, onSearchChange }: HeaderProps) {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             </div>
           </div>
-          
+
           {/* Action Buttons */}
           <div className="flex items-center space-x-3">
             <Button

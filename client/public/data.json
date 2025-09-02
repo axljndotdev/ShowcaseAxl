@@ -11,19 +11,20 @@
   "products": [
     {
       "id": "prod1",
-      "title": "Premium Wireless Headphones",
-      "brand": "Sony",
-      "description": "High-quality wireless headphones with noise cancellation",
-      "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
-      "originalPrice": "199.00",
-      "salePrice": "149.00",
+      "title": "Einmilk Organic Wipes",
+      "brand": "Einmilk",
+      "description": "High-quality organics wipes for your baby's gentle skin",
+      "imageUrl": "https://www.einmilk.com/wp-content/uploads/2022/02/Flsh-Deal_6001%E4%B8%BB%E5%9B%BE-12-2-.jpg",
+      "originalPrice": "Php290.00",
+      "salePrice": null,
       "rating": "4.8",
-      "categoryId": "cat4",
-      "affiliateUrl": "https://example.com/headphones",
-      "badgeText": "25% OFF",
-      "badgeType": "discount",
+      "categoryId": "cat5",
+      "affiliateUrl": "https://vt.tiktok.com/ZSHtNFVTHvK7C-MWbBs/",
+      "badgeText": null,
+      "badgeType": null,
       "isActive": true
     },
+    
     {
       "id": "prod2",
       "title": "Vitamin C Serum Set",
